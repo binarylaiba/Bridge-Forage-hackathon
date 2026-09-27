@@ -1,0 +1,54 @@
+# Shared logging configuration — JSON file driver with rotation so logs don't
+# fill the disk, max 10 MB per file, 5 files kept (50 MB total per service).
+# View live:  docker compose logs -f
+# View one:   docker compose logs -f backend
+#             docker compose logs -f watcher
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+    tag: "{{.Name}}/{{.ID}}"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: product-catalog-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      # Persist products.json on the host so data survives container restarts.
+      - ./backend/data:/app/data
+      # Expose docs/ to the backend container (Swagger UI reads openapi.json).
+      - ./docs:/app/../docs:ro
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/products"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  watcher:
+    build:
+      context: ./watcher
+    container_name: product-catalog-watcher
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      # Watcher reads backend/routes/ to detect changes (read-only).
+      - ./backend/routes:/app/../backend/routes:ro
+      # Watcher writes regenerated docs here; backend reads openapi.json from here.
+      - ./docs:/app/../docs
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    logging: *default-logging
+    # BOBSHELL_API_KEY is loaded from watcher/.env (gitignored).
+    # See watcher/.env.example for the required variable.
+    env_file:
+      - ./watcher/.env

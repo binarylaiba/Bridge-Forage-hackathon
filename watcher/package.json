@@ -1,0 +1,12 @@
+{
+  "name": "watcher",
+  "version": "1.0.0",
+  "description": "File watcher that triggers Bob CLI to regenerate API docs on backend changes",
+  "main": "watch.js",
+  "scripts": {
+    "start": "node watch.js"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0"
+  }
+}
