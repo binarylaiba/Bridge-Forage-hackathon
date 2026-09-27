@@ -1,2 +1,8 @@
-node_modules
-.env
+# Ignore node_modules in all directories
+**/node_modules/
+
+# Ignore .env files in all directories
+**/.env
+# Bob Shell binary — download from https://bob.ibm.com/releases?bob=shell
+# and place at watcher/bob-shell.tgz before building the Docker image.
+**/bob-shell.tgz
