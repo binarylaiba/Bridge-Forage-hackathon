@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0b0f19;
+    color: #f1f5f9;
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
+/* Custom glowing styles and scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(15, 98, 254, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(15, 98, 254, 0.8), 0 0 45px rgba(17, 211, 243, 0.4);
+  }
+}
+
+@keyframes warningGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(218, 30, 40, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(218, 30, 40, 0.8);
+  }
+}
+
+.pulse-glow-blue {
+  animation: pulseGlow 2.5s infinite;
+}
+
+.pulse-glow-red {
+  animation: warningGlow 1.5s infinite;
+}
