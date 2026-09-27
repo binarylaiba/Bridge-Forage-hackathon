@@ -1,6 +1,6 @@
 # AI Sync Demo — Product Catalog
 
-This repository is a miniature backend sandbox paired with an AI-powered documentation pipeline. An Express API serves a simple product catalog; a chokidar watcher monitors backend route files and, whenever a change is saved, hands the diff context to IBM Bob Shell so it can automatically regenerate the OpenAPI spec and the human-readable API reference. The result is that the frontend team always has an up-to-date, standalone guide to build against — without any manual documentation work.
+This repository is a miniature backend sandbox paired with an AI-powered documentation pipeline. An Express API serves a simple product catalog; a chokidar watcher monitors backend route files and, whenever a change is saved, passes the changed file to IBM Bob Shell so it can automatically regenerate the OpenAPI spec and the human-readable API reference — without any manual documentation work.
 
 ---
 
@@ -73,15 +73,15 @@ Bridge-Forage-hackathon/
 ├── watcher/
 │   ├── Dockerfile            # production image for the watcher
 │   ├── package.json          # chokidar dependency
-│   ├── watch.js              # chokidar watcher → bob --yolo -p
+│   ├── watch.js              # chokidar watcher → bob -p
+│   ├── .env.example          # copy to watcher/.env and fill in BOBSHELL_API_KEY
 │   └── prompts/
 │       └── update-docs.md    # Bob prompt template with {{changedFile}}
 ├── docs/
 │   ├── openapi.json          # OpenAPI 3.0.3 machine-readable contract
 │   ├── API.md                # human-readable technical reference
-│   └── FRONTEND_GUIDE.md     # frontend team hand-off guide
+│   └── FRONTEND_GUIDE.md     # frontend team hand-off guide (static)
 ├── docker-compose.yml        # orchestrates backend + watcher on a single VPS
-├── .env.example              # copy to .env and fill in BOB_API_KEY
 ├── demo.sh                   # applies the breaking change: title → productName
 ├── demo-reset.sh             # restores title ← productName (repeat the demo)
 ├── DEMO.md                   # step-by-step demo walk-through
@@ -106,7 +106,7 @@ The API server starts on **port 3001** via nodemon and reloads automatically on 
 cd watcher && npm install && node watch.js
 ```
 
-The watcher monitors `backend/routes/` and triggers `bob --yolo -p` on any file save, regenerating both `docs/API.md` and `docs/openapi.json` automatically.
+The watcher monitors `backend/routes/` and triggers `bob -p` on any file save, regenerating `docs/API.md` and `docs/openapi.json` automatically.
 
 ---
 
@@ -124,8 +124,8 @@ Both services can be run together on a single VPS using Docker Compose.
 
 ```bash
 # 1. Copy the example env file and fill in your Bob API key
-cp .env.example .env
-# Edit .env and set BOB_API_KEY=<your key>
+cp watcher/.env.example watcher/.env
+# Edit watcher/.env and set BOBSHELL_API_KEY=<your key>
 
 # 2. Build and start both services
 docker compose up --build -d
