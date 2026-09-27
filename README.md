@@ -6,7 +6,7 @@ A developer tool that uses **IBM Bob AI** to automatically detect which files ar
 
 ## 🚀 What It Does
 
-When a field is renamed on the backend (e.g. `fullName` → `name` on the `User` model), this tool:
+When a field is renamed on the backend (e.g., `fullName` → `name` on the `User` model), this tool:
 
 1. Sends a prompt to **Bob AI** via the CLI
 2. Bob scans the project and identifies affected files (components, API docs, tests)
