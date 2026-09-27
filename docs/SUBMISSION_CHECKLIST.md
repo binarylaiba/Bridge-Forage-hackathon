@@ -73,3 +73,19 @@
 - [ ] IBM Bob evidence/screenshots included where required
 - [ ] Final submission reviewed by at least two team members
 - [ ] Submission completed before the deadline
+
+## Required Submission Assets
+
+- [ ] Public GitHub repository finalized
+- [ ] Working prototype deployed and accessible through a public URL
+- [ ] Demo application URL tested in an incognito/private browser
+- [ ] Cover image prepared
+- [ ] Video presentation uploaded and publicly accessible
+- [ ] Pitch deck completed and exported to PDF
+- [ ] Project title finalized
+- [ ] Short description finalized
+- [ ] Long description finalized
+- [ ] Technology tags selected
+- [ ] Category / track selected
+- [ ] Files/code where IBM Bob assisted clearly identified
+- [ ] Bob task-session summary screenshots collected from all required team members
