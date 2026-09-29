@@ -1,4 +1,4 @@
-# Bridge Forge — Hackathon Project
+# Bridge Forge — IBM Hackathon Project
 
 A developer tool that uses **IBM Bob AI** to automatically detect which files are affected when a backend model field is renamed — saving time and reducing bugs during refactors.
 
